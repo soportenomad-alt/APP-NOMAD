@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0f5eff" />
+  <title>NOMAD · Interfaz móvil</title>
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="assets/img/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/img/icon-192.png">
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <div class="app" role="application" aria-label="NOMAD móvil">
+    <!-- Topbar -->
+    <header class="topbar">
+      <div class="toprow">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">
+            <img src="assets/img/nomad-logo.png" alt="NOMAD" />
+          </div>
+          <div class="titlewrap">
+            <div class="title" id="topTitle">NOMAD</div>
+            <div class="subtitle" id="topSub">Genética clínica · Interfaz v6</div>
+          </div>
+        </div>
+
+        <div class="topactions">
+          <div class="pill" title="Estado">
+            <span class="dot" aria-hidden="true"></span>
+            <span style="font-size:12px;color:rgba(255,255,255,.85)">Online</span>
+          </div>
+          <button class="iconbtn" id="btnScan" title="Escanear" aria-label="Escanear">
+            <i class="fa-solid fa-qrcode"></i>
+          </button>
+          <button class="iconbtn" id="btnBell" title="Notificaciones" aria-label="Notificaciones">
+            <i class="fa-solid fa-bell"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="searchbar" role="search">
+        <i class="fa-solid fa-magnifying-glass" aria-hidden="true" style="color:rgba(255,255,255,.55)"></i>
+        <input id="globalSearch" type="text" placeholder="Buscar panel, muestra, ID, paciente…" autocomplete="off" />
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main class="main" id="main">
+      <!-- HOME -->
+      <section class="screen active" data-screen="home">
+        <div class="hero">
+          <div class="glow" aria-hidden="true"></div>
+
+          <div class="hero-grid">
+            <div class="hero-copy">
+              <h1>Genética clínica con experiencia de app</h1>
+              <p>
+                Interfaz lista para GitHub Pages. Estilo moderno tipo Genos Médica: gradientes, sombras suaves,
+                tarjetas y micro-interacciones. Enfocado a genética clínica, oncología y programas con clínicas.
+              </p>
+
+              <div class="quickrow">
+                <button class="btn" id="btnQuickCatalog">
+                  <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+                  &nbsp;Ver catálogo
+                </button>
+                <button class="btn ghost" id="btnQuickQuote">
+                  <i class="fa-solid fa-file-invoice-dollar" aria-hidden="true"></i>
+                  &nbsp;Cotizar
+                </button>
+              </div>
+
+              <div class="hero-stats" aria-label="Indicadores">
+                <div class="stat">
+                  <div class="statnum">NGS</div>
+                  <div class="statlabel">Paneles · Biomarcadores</div>
+                </div>
+                <div class="stat">
+                  <div class="statnum">Clinics</div>
+                  <div class="statlabel">Convenios · Paquetes</div>
+                </div>
+                <div class="stat">
+                  <div class="statnum">Rápido</div>
+                  <div class="statlabel">Cotización en minutos</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-media">
+              <div class="carousel" id="heroCarousel" aria-label="Carrusel NOMAD">
+                <div class="carousel-track" aria-live="polite">
+                  <article class="slide" data-slide>
+                    <img class="slideimg" src="assets/img/carousel/dna-helix.jpg" alt="Estructura de ADN" loading="lazy">
+                    <div class="slideover">
+                      <span class="kicker">ADN</span>
+                      <h3>¿Buscas colaboraciones científicas?</h3>
+                      <p>Programas con hospitales y centros, validación de biomarcadores, co-desarrollo y reportes clínicos.</p>
+                      <div class="slidechips">
+                        <span class="chip">Programas</span>
+                        <span class="chip">Investigación</span>
+                        <span class="chip">Bioinformática</span>
+                      </div>
+                    </div>
+                  </article>
+
+                  <article class="slide" data-slide>
+                    <img class="slideimg" src="assets/img/carousel/doctor-consult.jpg" alt="Médico consultando a una paciente" loading="lazy">
+                    <div class="slideover">
+                      <span class="kicker">Médicos</span>
+                      <h3>Clínicas aliadas + marketing médico</h3>
+                      <p>Paquetes para clínicas: captación, materiales, asesoría y acompañamiento para integrar genética clínica.</p>
+                      <div class="slidechips">
+                        <span class="chip">Clínicas</span>
+                        <span class="chip">Paquetes</span>
+                        <span class="chip">Crecimiento</span>
+                      </div>
+                    </div>
+                  </article>
+
+                  <article class="slide" data-slide>
+                    <img class="slideimg" src="assets/img/carousel/microscope.jpg" alt="Microscopio de laboratorio" loading="lazy">
+                    <div class="slideover">
+                      <span class="kicker">Laboratorio</span>
+                      <h3>Calidad, trazabilidad y tiempos claros</h3>
+                      <p>Estatus por muestra, checklist de requisición y entregables listos para expediente o comité.</p>
+                      <div class="slidechips">
+                        <span class="chip">Control</span>
+                        <span class="chip">TAT</span>
+                        <span class="chip">Reportes</span>
+                      </div>
+                    </div>
+                  </article>
+
+                  <article class="slide" data-slide>
+                    <img class="slideimg" src="assets/img/carousel/researcher-microscope.jpg" alt="Investigador usando microscopio" loading="lazy">
+                    <div class="slideover">
+                      <span class="kicker">Ciencia</span>
+                      <h3>Soporte para publicaciones y comités</h3>
+                      <p>Resumen ejecutivo, anexos técnicos y trazabilidad de variantes para comunicación clínica y científica.</p>
+                      <div class="slidechips">
+                        <span class="chip">Evidencia</span>
+                        <span class="chip">Comité</span>
+                        <span class="chip">Docs</span>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+
+                <div class="carousel-ui">
+                  <button class="iconbtn" type="button" data-prev aria-label="Anterior">
+                    <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+                  </button>
+                  <div class="dots" data-dots aria-label="Paginación del carrusel"></div>
+                  <button class="iconbtn" type="button" data-next aria-label="Siguiente">
+                    <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="medialabel">
+                Imágenes reales (dominio público/CC) incluidas dentro del ZIP.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="sectiontitle">
+            <h2>Accesos rápidos</h2>
+            <a href="#" id="btnInstall">Instalar</a>
+          </div>
+
+          <div class="grid2">
+            <div class="card pad">
+              <div class="row">
+                <div>
+                  <h3>Resultados</h3>
+                  <small>Seguimiento por folio</small>
+                </div>
+                <span class="badge good"><i class="fa-solid fa-check" aria-hidden="true"></i> Listos</span>
+              </div>
+              <div class="hr"></div>
+              <button class="btn small ghost" id="btnQuickResults">Abrir panel</button>
+            </div>
+
+            <div class="card pad">
+              <div class="row">
+                <div>
+                  <h3>Soporte</h3>
+                  <small>WhatsApp / Correo</small>
+                </div>
+                <span class="badge cyan"><i class="fa-solid fa-headset" aria-hidden="true"></i> 24/7</span>
+              </div>
+              <div class="hr"></div>
+              <button class="btn small ghost" id="btnQuickSupport">Contactar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="sectiontitle">
+            <h2>Métricas</h2>
+            <a href="#" onclick="return false;">Ver todo</a>
+          </div>
+
+          <div class="kpis">
+            <div class="kpi">
+              <div class="num" id="cartCount">0</div>
+              <div class="lbl">En cotización</div>
+            </div>
+            <div class="kpi">
+              <div class="num">48h</div>
+              <div class="lbl">TAT promedio</div>
+            </div>
+            <div class="kpi">
+              <div class="num">NGS</div>
+              <div class="lbl">Plataforma</div>
+            </div>
+          </div>
+          <div class="footerhint">
+            Nota: esta es una demo visual. Si quieres, lo conectamos a tu Firebase y generamos PDF real.
+          </div>
+        </div>
+      </section>
+
+      <!-- CATALOG -->
+      <section class="screen" data-screen="catalog">
+        <div class="sectiontitle" style="margin-top:4px">
+          <h2>Paneles recomendados</h2>
+          <a href="#" onclick="return false;">Filtros</a>
+        </div>
+
+        <div class="list" id="catalogList"></div>
+      </section>
+
+      <!-- QUOTE -->
+      <section class="screen" data-screen="quote">
+        <div class="card pad">
+          <div class="row">
+            <div>
+              <h3>Agregar estudio</h3>
+              <small>Selector rápido</small>
+            </div>
+            <span class="badge blue"><i class="fa-solid fa-cart-shopping" aria-hidden="true"></i> <span id="cartCount2"> </span></span>
+          </div>
+          <div class="hr"></div>
+
+          <div class="row" style="align-items:flex-end">
+            <div style="flex:1">
+              <label for="quotePick">Estudio</label>
+              <select id="quotePick"></select>
+            </div>
+            <button class="btn small" id="btnAddToQuote"><i class="fa-solid fa-plus"></i>&nbsp;Agregar</button>
+          </div>
+
+          <div class="hr"></div>
+
+          <div class="form">
+            <div class="field">
+              <label>Nombre del paciente</label>
+              <input class="input" id="pName" placeholder="Ej. Juan Pérez" />
+            </div>
+
+            <div class="row">
+              <div class="field" style="flex:1">
+                <label>Expediente</label>
+                <input class="input" id="pExp" placeholder="Ej. 072" />
+              </div>
+              <div class="field" style="flex:1">
+                <label>Sede</label>
+                <select id="pSite">
+                  <option value="">Selecciona</option>
+                  <option>Toluca</option>
+                  <option>Narvarte</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="field" style="flex:1">
+                <label>Descuento (%)</label>
+                <input class="input" id="discount" type="number" min="0" max="50" value="0" />
+              </div>
+              <div class="field" style="flex:1">
+                <label>IVA extra (%)</label>
+                <input class="input" id="iva" type="number" min="0" max="16" value="0" />
+              </div>
+            </div>
+
+            <div class="hint">
+              Los precios del catálogo se cargan desde tu catálogo oficial (IVA incluido).
+              Si quieres calcular un IVA adicional, ajusta el campo “IVA extra”; si no, déjalo en 0.
+              El botón “Vista previa” abre un resumen tipo “bottom sheet”. También puedes exportar el JSON (útil para integrar con Firebase).
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="sectiontitle">
+            <h2>Tu cotización</h2>
+            <a href="#" onclick="return false;">Detalle</a>
+          </div>
+
+          <div class="card pad" id="quoteCart"></div>
+
+          <div class="card pad" style="margin-top:10px">
+            <div class="minirow">
+              <span>Subtotal</span>
+              <b id="qSubtotal">$0</b>
+            </div>
+            <div class="minirow">
+              <span>Descuento</span>
+              <span id="qDiscount">-$0</span>
+            </div>
+            <div class="minirow">
+              <span>IVA</span>
+              <span id="qIVA">+$0</span>
+            </div>
+            <div class="hr"></div>
+            <div class="minirow">
+              <span>Total</span>
+              <b id="qTotal">$0</b>
+            </div>
+
+            <div class="actions" style="margin-top:12px">
+              <button class="btn ghost" id="btnExport"><i class="fa-solid fa-download"></i>&nbsp;Exportar JSON</button>
+              <button class="btn" id="btnPreview"><i class="fa-solid fa-eye"></i>&nbsp;Vista previa</button>
+            </div>
+
+            <div class="actions" style="margin-top:10px; grid-template-columns:1fr">
+              <button class="btn small ghost" id="btnShare"><i class="fa-solid fa-share-nodes"></i>&nbsp;Compartir</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RESULTS -->
+      <section class="screen" data-screen="results">
+        <div class="sectiontitle" style="margin-top:4px">
+          <h2>Últimos movimientos</h2>
+          <a href="#" onclick="return false;">Exportar</a>
+        </div>
+        <div class="list" id="resultsList"></div>
+      </section>
+
+      <!-- PROFILE -->
+      <section class="screen" data-screen="profile">
+        <div class="card pad">
+          <div class="row">
+            <div style="display:flex; align-items:center; gap:12px">
+              <div class="logo" aria-hidden="true" style="width:44px;height:44px">
+                <img src="assets/img/nomad-logo.png" alt="" />
+              </div>
+              <div>
+                <h3 style="margin:0">Usuario demo</h3>
+                <small>admin@nomadgenetics.com</small>
+              </div>
+            </div>
+            <span class="badge blue"><i class="fa-solid fa-shield-halved"></i>&nbsp;MFA</span>
+          </div>
+          <div class="hr"></div>
+
+          <div class="minirow">
+            <span>Modo</span>
+            <span class="badge cyan">Profesional</span>
+          </div>
+          <div class="minirow">
+            <span>Notificaciones</span>
+            <span class="badge good">Activas</span>
+          </div>
+          <div class="minirow">
+            <span>Privacidad</span>
+            <span class="badge warn">Revisión</span>
+          </div>
+
+          <div class="footerhint">
+            ¿Quieres que esto sea login real con Firebase Auth y acceso restringido? También se puede.
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="sectiontitle">
+            <h2>Atajos</h2>
+            <a href="#" onclick="return false;">Ayuda</a>
+          </div>
+
+          <div class="grid2">
+            <button class="btn ghost" onclick="alert('Demo: abrir términos');">
+              <i class="fa-solid fa-file-lines"></i>&nbsp;Términos
+            </button>
+            <button class="btn ghost" onclick="alert('Demo: enviar feedback');">
+              <i class="fa-solid fa-comment-dots"></i>&nbsp;Feedback
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Bottom Nav -->
+    <nav class="bottomnav" aria-label="Navegación inferior">
+      <div class="navrow">
+        <button class="navbtn active" data-nav="home" aria-label="Inicio">
+          <div class="i"><i class="fa-solid fa-house"></i></div>
+          <span>Inicio</span>
+        </button>
+        <button class="navbtn" data-nav="catalog" aria-label="Catálogo">
+          <div class="i"><i class="fa-solid fa-layer-group"></i></div>
+          <span>Catálogo</span>
+        </button>
+        <button class="navbtn" data-nav="quote" aria-label="Cotizar">
+          <div class="i"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+          <span>Cotizar</span>
+        </button>
+        <button class="navbtn" data-nav="results" aria-label="Resultados">
+          <div class="i"><i class="fa-solid fa-chart-line"></i></div>
+          <span>Resultados</span>
+        </button>
+        <button class="navbtn" data-nav="profile" aria-label="Perfil">
+          <div class="i"><i class="fa-solid fa-user"></i></div>
+          <span>Perfil</span>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Bottom sheet (preview) -->
+  <div class="sheet" id="sheet" aria-hidden="true">
+    <div class="panel" role="dialog" aria-label="Resumen de cotización">
+      <div class="grab" aria-hidden="true"></div>
+      <div class="row">
+        <div>
+          <h3>Resumen (demo)</h3>
+          <p>Visual tipo app para validar look & feel. Se puede conectar a tu backend/PDF cuando lo pidas.</p>
+        </div>
+        <button class="iconbtn" id="sheetClose" aria-label="Cerrar">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="hr"></div>
+
+      <div id="sheetList"></div>
+
+      <div class="hr"></div>
+
+      <div class="minirow"><span>Subtotal</span><b id="sheetSubtotal">$0</b></div>
+      <div class="minirow"><span>Descuento</span><span id="sheetDiscount">-$0</span></div>
+      <div class="minirow"><span>IVA</span><span id="sheetIVA">+$0</span></div>
+      <div class="hr"></div>
+      <div class="minirow"><span>Total</span><b id="sheetTotal">$0</b></div>
+
+      <div class="actions">
+        <button class="btn ghost" onclick="alert('Demo: generar PDF');">
+          <i class="fa-solid fa-file-pdf"></i>&nbsp;Generar PDF
+        </button>
+        <button class="btn" onclick="alert('Demo: enviar por WhatsApp/Correo');">
+          <i class="fa-solid fa-paper-plane"></i>&nbsp;Enviar
+        </button>
+      </div>
+
+      <div class="footerhint">
+        Si quieres que sea idéntico a tu referencia (colores, secciones, textos), dime qué pantallas necesitas (login, home, catálogo, cotizador, resultados).
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

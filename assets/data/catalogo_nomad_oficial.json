@@ -1,0 +1,106 @@
+[
+  {
+    "title": "FoundationOne CDx",
+    "description": "Perfil Genómico Oncológico Integral (FDA aprobado ) para tumores sólidos.\nAnaliza 324 genes, MSI, TMB y alteraciones en genes clave (EGFR, ALK, ROS1, BRAF, NTRK, METex14, PIK3CA, PTEN, AKT1) mediante NGS.\nMuestra: Bloque / laminillas de tejido tumoral.\nIndicado en: pulmón no microcítico, mama, colon, ovario, próstata, melanoma, colangiocarcinoma, sarcomas.\nUso clínico: Ideal para guiar terapias dirigidas, evaluar resistencia.",
+    "price_nomad": "$110,200.00 MXN",
+    "price_val": 110200.0,
+    "link": "https://www.rochefoundationmedicine.com/#/en/international/foundationone-cdx",
+    "image": "assets/images/foundationone-cdx.png"
+  },
+  {
+    "title": "FoundationOne Liquid CDx",
+    "description": "Perfil Genómico Oncológico Integral por biopsia líquida (FDA aprobado) para tumores sólidos avanzados.\nAnaliza + 300 genes y biomarcadores clave (MSI, TMB, ctDNA) mediante NGS.\nGenes destacados: BRCA1/2, ALK, ROS1, PIK3CA, NTRK, entre otros.\nIndicada en: pulmón, mama, ovario, próstata, colon y más.\nMuestra: Sangre periférica (2 tubos).\nUso clínico: Ideal cuando no es viable una biopsia de tejido.",
+    "price_nomad": "$110,200.00 MXN",
+    "price_val": 110200.0,
+    "link": "https://www.rochefoundationmedicine.com/#/en/international/foundationone-liquid-cdx",
+    "image": "assets/images/foundationone-liquid-cdx.png"
+  },
+  {
+    "title": "FoundationOne Heme",
+    "description": "Perfil Genómico Oncológico Integral (ADN + ARN) para neoplasias hematológicas y sarcomas.\nAnaliza 406 genes por ADN y 265 por ARN, detectando fusiones y reordenamientos complejos mediante NGS.\nMuestra: Bloque / laminillas de tejido tumoral.\nGenes clave: TP53, FLT3, IDH2, KRAS, NRAS, RUNX1, BCL2, MYC, JAK2, MLL y más.\nUso clínico: Ideal para guiar terapias personalizadas y evaluar mecanismos de resistencia.",
+    "price_nomad": "$135,140.00 MXN",
+    "price_val": 135140.0,
+    "link": "https://foundationmedicine.com.mx/nuest ros-servicios/heme.html",
+    "image": "assets/images/foundationone-heme.png"
+  },
+  {
+    "title": "Guardant360 CDx",
+    "description": "Perfil Genómico Oncológico de biopsia líquida (FDA aprobada) para tumores sólidos avanzados (pulmón no microcítico, mama, colon, entre otros).\nAnaliza 74 genes + MSI-High status  mediante NGS .\nMuestra: Sangre periférica 2 tubos de 10 ml de sangre recolectados en tubos Streck.\nUso clínico: Permite identificar alteraciones accionables para terapias dirigidas y mecanismos de resistencia.",
+    "price_nomad": "$93,113.20 MXN",
+    "price_val": 93113.2,
+    "link": "https://www.guardantcomplete.com/prod ucts/guardant360-cdx",
+    "image": "assets/images/guardant360-cdx.png"
+  },
+  {
+    "title": "Guardant360 CDx Expanded",
+    "description": "Perfil Genómico Oncológico de biopsia líquida (FDA aprobada) para tumores sólidos avanzados (pulmón no microcítico, mama, colon, entre otros).\nAnaliza 74 genes + MSI-High status + TMB + HRR genes mediante NGS.\nMuestra: Sangre periférica 2 tubos de 10 ml de sangre recolectados en tubos Streck.\nUso clínico: Permite identificar alteraciones accionables para terapias dirigidas y mecanismos de resistencia.",
+    "price_nomad": "$106,720.00 MXN",
+    "price_val": 106720.0,
+    "link": "https://www.guardantcomplete.com/",
+    "image": "assets/images/2.png"
+  },
+  {
+    "title": "Guardant Health Reveal",
+    "description": "Biopsia líquida para detección de enfermedad residual mínima (MRD) y monitoreo postquirúrgico.\nUtiliza ctDNA para analizar más de  2,000 regiones diferencialmente metiladas (marcas epigenéticas) mediante NGS.\nCánceres: Colon, mama, pulmón (estadios II–III).\nMuestra: Sangre periférica 4 tubos de 10 ml de sangre recolectados en tubos Streck.\nUso clínico: Detecta riesgo de recaída y permite ajustar el tratamiento.",
+    "price_nomad": "$97,382.00 MXN",
+    "price_val": 97382.0,
+    "link": "https://www.guardantcomplete.com/prod ucts/guardant-reveal",
+    "image": "assets/images/guardant-health-reveal.png"
+  },
+  {
+    "title": "Tempus xF",
+    "description": "Perfil genómico por biopsia líquida (cfDNA).\nAnaliza 105 genes, incluyendo biomarcadores clave como EGFR, ALK, KRAS, BRCA1/2, HER2, MSI, TMB y NTRK mediante NGS.\nMuestra: Sangre periférica 2 tubos de 10 ml de sangre recolectados en tubos Streck.\nCánceres aplicables: Pulmón no microcítico, mama, colon, melanoma, próstata, vejiga, colangiocarcinoma, gastroesofágico y GIST.\nUso clínico: Ideal para guiar terapias dirigidas, evaluar resistencia y monitorear respuesta al tratamiento.",
+    "price_nomad": "$99,000.00 MXN",
+    "price_val": 99000.0,
+    "link": "https://www.tempus.com/oncology/geno mic-profiling trashed/xf/",
+    "image": "assets/images/tempus-xf.png"
+  },
+  {
+    "title": "Tempus xF+",
+    "description": "Biopsia líquida avanzada que analiza hasta 523 genes en cfDNA mediante NGS.\nIndicada para: Pulmón, mama, colon, melanoma, próstata, vejiga, colangiocarcinoma, gastroesofágico, GIST, leucemias y linfomas (paneles específicos).\nMuestra: Sangre periférica 2 tubos de 10 ml de sangre recolectados en tubos Streck.\nBiomarcadores clave: EGFR, ALK, KRAS, BRCA1/2, HER2, MSI, TMB, NTRK, ESR1.\nUso clínico: Terapias dirigidas, inmunoterapia, ensayos clínicos, monitoreo de carga tumoral y resistencia.",
+    "price_nomad": "$99,000.00 MXN",
+    "price_val": 99000.0,
+    "link": "https://www.tempus.com/oncology/geno mic-profiling trashed/xf/",
+    "image": "assets/images/1.png"
+  },
+  {
+    "title": "Tempus xT",
+    "description": "Perfil genómico por NGS en tejido para tumores sólidos avanzados.\nAnaliza 648 genes, incluyendo TMB, MSI, HRD, CNVs, SNVs, indels y fusiones.\nMuestra: Tejido tumoral.\nCánceres aplicables: Todos los tumores sólidos avanzados.\nUso clínico: Ideal para guiar terapias dirigidas, inmunoterapia, evaluar mecanismos de resistencia y acceder a ensayos clínicos.",
+    "price_nomad": "$99,000.00 MXN",
+    "price_val": 99000.0,
+    "link": "https://www.tempus.com/oncology/geno mic-profiling trashed/xt/",
+    "image": "assets/images/tempus-xt.png"
+  },
+  {
+    "title": "Tempus xT + xR",
+    "description": "Perfil Genómico Integral para Tumores Sólidos Avanzados.\nAnaliza el DNA tumoral y cfDNA para identificar alteraciones genéticas en tumores sólidos avanzados con combinación de pruebas NGS.\nMuestra: Tejido tumoral + sangre.\nCánceres aplicables: Tumores sólidos avanzados,  pulmón, mama, colon, melanoma, próstata, vejiga, colangiocarcinoma, entre otros._x000B_Genes clave: 648 genes en xT (mutaciones puntuales, fusiones, CNVs, TMB, MSI) y más de 100 genes en xR (fusiones génicas, eventos de splicing como MET Exon 14, EGFRvIII).\nUso clínico: Terapias dirigidas, inmunoterapia, detección de resistencia a tratamientos previos, monitoreo de respuesta, y acceso a ensayos clínicos.",
+    "price_nomad": "$99,000.00 MXN",
+    "price_val": 99000.0028,
+    "link": "https://www.tempus.com/oncology/genomic-profiling/xt-xr/",
+    "image": "assets/images/3.png"
+  },
+  {
+    "title": "INVITAE Panel multicancer",
+    "description": "Prueba genética para evaluar riesgos hereditarios de cáncer.\nAnaliza 70 genes relacionados con cáncer hereditario, ayudando a identificar variantes genéticas que aumentan el riesgo de cáncer.\nTipos de Cáncer Tratados: Mama, colorrectal, endometrial, gástrico, melanoma, ovario, páncreas, próstata, renal, piel, tiroides y útero.\nMuestra: Sangre periférica.\nUso clínico: Identificación de riesgos hereditarios para guiar decisiones de tratamiento y prevención personalizadas, para la toma de decisiones oportunas en pacientes con antecedentes familiares de cáncer o diagnóstico actual.",
+    "price_nomad": "$24,000.00 MXN",
+    "price_val": 24000.00444,
+    "link": "https://www.invitae.com/us/providers/test-catalog/test-01101",
+    "image": "assets/images/invitae-panel-multicancer.png"
+  },
+  {
+    "title": "Avenio Roche Tisssue",
+    "description": "Perfil Genómico somático del perfil mutacional amplio de tumores sólidos, desarrollado por Roche (powered by FoundationOne Medicine), mediante secuenciación masiva por NGS. A partir de muestras de tejido tumoral, el perfil determina mutaciones genéticas accionables en 324 genes vinculados a terapia oncológica de múltiples tipos de cáncer, además de incluir importantes biomarcadores genéticos como MSI y TMB para la toma de decisión de inmunoterapia.",
+    "price_nomad": "$55,680.00 MXN",
+    "price_val": 55680.0,
+    "link": "https://nomadlaboratorios.com/paneles-avenio-roche/",
+    "image": "assets/images/avenio-roche-tisssue.png"
+  },
+  {
+    "title": "Examen OncoIDX Complete ctDNA",
+    "description": "Examen genético somático del perfil mutacional amplio de tumores sólidos, analisis de  mediante secuenciación masiva por NGS en nuestros laboratorios especializados. A partir de una biopsia de tumoral circulante acompañado de una muestra control de sangre periférica, el perfil determina mutaciones genéticas accionables en 688 genes vinculados a terapia oncológica de múltiples tipos de cáncer, además de un perfil germinal del paciente para determinación de variantes asociadas a cáncer hereditario en 63 genes. Este panel amplio incluye bMSI, bTMB y un panel de farmacogenética para metabolismo de quimioterapias de uso frecuente, como por ejemplo DPYD.",
+    "price_nomad": "$55,680.00 MXN",
+    "price_val": 55680.0,
+    "link": "https://examen-onco-idx-complete-ct-dna.vercel.app/",
+    "image": "assets/images/examen-oncoidx-complete-ctdna.png"
+  }
+]
