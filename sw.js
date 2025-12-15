@@ -1,12 +1,18 @@
 /* Simple offline cache for static assets (GitHub Pages friendly). */
-const CACHE_NAME = "nomad-ui-v6";
+// Bump de versión de cache para forzar actualización cuando se despliega un ZIP nuevo.
+const CACHE_NAME = "nomad-ui-v6-7";
 const ASSETS = [
   "./",
   "./index.html",
+  "./print.html",
   "./manifest.json",
   "./assets/css/styles.css",
   "./assets/js/app.js",
+  "./assets/js/firebase.js",
   "./assets/img/nomad-logo.png",
+  "./assets/img/logosNomad-11.png",
+  "./assets/img/logosNomad-14.png",
+  "./assets/img/qr-nomad.png",
   "./assets/img/icon-192.png",
   "./assets/img/icon-512.png",
   "./assets/img/carousel/dna-helix.jpg",

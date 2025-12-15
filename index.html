@@ -24,7 +24,7 @@
       <div class="toprow">
         <div class="brand">
           <div class="logo" aria-hidden="true">
-            <img src="assets/img/nomad-logo.png" alt="NOMAD" />
+            <img src="assets/img/logosNomad-14.png" alt="NOMAD" />
           </div>
           <div class="titlewrap">
             <div class="title" id="topTitle">NOMAD</div>
@@ -269,22 +269,9 @@
                 </select>
               </div>
             </div>
-
-            <div class="row">
-              <div class="field" style="flex:1">
-                <label>Descuento (%)</label>
-                <input class="input" id="discount" type="number" min="0" max="50" value="0" />
-              </div>
-              <div class="field" style="flex:1">
-                <label>IVA extra (%)</label>
-                <input class="input" id="iva" type="number" min="0" max="16" value="0" />
-              </div>
-            </div>
-
-            <div class="hint">
-              Los precios del catálogo se cargan desde tu catálogo oficial (IVA incluido).
-              Si quieres calcular un IVA adicional, ajusta el campo “IVA extra”; si no, déjalo en 0.
-              El botón “Vista previa” abre un resumen tipo “bottom sheet”. También puedes exportar el JSON (útil para integrar con Firebase).
+                        <div class="hint">
+              Los precios del catálogo ya incluyen IVA. Puedes agregar o eliminar estudios y revisar el total al instante.
+              Cuando esté listo, presiona “Generar cotización” para ir a la pantalla de pago (tarjeta, transferencia o depósito).
             </div>
           </div>
         </div>
@@ -302,22 +289,15 @@
               <span>Subtotal</span>
               <b id="qSubtotal">$0</b>
             </div>
-            <div class="minirow">
-              <span>Descuento</span>
-              <span id="qDiscount">-$0</span>
-            </div>
-            <div class="minirow">
-              <span>IVA</span>
-              <span id="qIVA">+$0</span>
-            </div>
-            <div class="hr"></div>
+<div class="hr"></div>
             <div class="minirow">
               <span>Total</span>
               <b id="qTotal">$0</b>
             </div>
 
             <div class="actions" style="margin-top:12px">
-              <button class="btn ghost" id="btnExport"><i class="fa-solid fa-download"></i>&nbsp;Exportar JSON</button>
+              <button class="btn ghost" id="btnSave"><i class="fa-solid fa-cloud-arrow-up"></i>&nbsp;Guardar</button>
+              <button class="btn" id="btnBuy"><i class="fa-solid fa-file-invoice"></i>&nbsp;Generar cotización</button>
               <button class="btn" id="btnPreview"><i class="fa-solid fa-eye"></i>&nbsp;Vista previa</button>
             </div>
 
@@ -327,6 +307,50 @@
           </div>
         </div>
       </section>
+
+
+      <!-- PAY -->
+      <section class="screen" data-screen="pay">
+        <div class="sectiontitle" style="margin-top:4px">
+          <h2>Pago</h2>
+          <a href="#" id="btnBackToQuote">Volver</a>
+        </div>
+
+        <div class="card pad" id="paySummary"></div>
+
+        <div class="card pad" style="margin-top:10px">
+          <div class="row">
+            <div>
+              <h3>Método de pago</h3>
+              <small>Selecciona tarjeta, transferencia o depósito</small>
+            </div>
+            <span class="badge cyan"><i class="fa-solid fa-lock" aria-hidden="true"></i> Seguro</span>
+          </div>
+
+          <div class="hr"></div>
+
+          <div class="seg" id="payTabs" role="tablist" aria-label="Métodos de pago">
+            <button class="segbtn active" data-paytab="card" role="tab" aria-selected="true">
+              <i class="fa-solid fa-credit-card" aria-hidden="true"></i>&nbsp;Tarjeta
+            </button>
+            <button class="segbtn" data-paytab="transfer" role="tab" aria-selected="false">
+              <i class="fa-solid fa-building-columns" aria-hidden="true"></i>&nbsp;Transferencia
+            </button>
+            <button class="segbtn" data-paytab="deposit" role="tab" aria-selected="false">
+              <i class="fa-solid fa-money-bill-wave" aria-hidden="true"></i>&nbsp;Depósito
+            </button>
+          </div>
+
+          <div class="hr"></div>
+
+          <div id="payPanel"></div>
+
+          <div class="footerhint">
+            Nota: este flujo es demo visual. Si quieres cobro real con Stripe/Conekta y envío de comprobantes a tu WhatsApp/Correo, lo integramos.
+          </div>
+        </div>
+      </section>
+
 
       <!-- RESULTS -->
       <section class="screen" data-screen="results">
@@ -343,7 +367,7 @@
           <div class="row">
             <div style="display:flex; align-items:center; gap:12px">
               <div class="logo" aria-hidden="true" style="width:44px;height:44px">
-                <img src="assets/img/nomad-logo.png" alt="" />
+                <img src="assets/img/logosNomad-14.png" alt="" />
               </div>
               <div>
                 <h3 style="margin:0">Usuario demo</h3>
@@ -441,16 +465,14 @@
       <div class="hr"></div>
 
       <div class="minirow"><span>Subtotal</span><b id="sheetSubtotal">$0</b></div>
-      <div class="minirow"><span>Descuento</span><span id="sheetDiscount">-$0</span></div>
-      <div class="minirow"><span>IVA</span><span id="sheetIVA">+$0</span></div>
-      <div class="hr"></div>
+<div class="hr"></div>
       <div class="minirow"><span>Total</span><b id="sheetTotal">$0</b></div>
 
       <div class="actions">
-        <button class="btn ghost" onclick="alert('Demo: generar PDF');">
+        <button class="btn ghost" id="btnSheetPdf" type="button">
           <i class="fa-solid fa-file-pdf"></i>&nbsp;Generar PDF
         </button>
-        <button class="btn" onclick="alert('Demo: enviar por WhatsApp/Correo');">
+        <button class="btn" id="btnSheetSend" type="button">
           <i class="fa-solid fa-paper-plane"></i>&nbsp;Enviar
         </button>
       </div>
@@ -461,6 +483,7 @@
     </div>
   </div>
 
-  <script src="assets/js/app.js"></script>
+  <script defer src="assets/js/firebase.js"></script>
+  <script defer src="assets/js/app.js"></script>
 </body>
 </html>

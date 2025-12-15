@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cotización NOMAD</title>
+  <style>
+    :root{ --ink:#0b1b2a; --muted:#516273; --line:#e6eef7; --bg:#ffffff; }
+    body{ font-family: Arial, Helvetica, sans-serif; margin: 28px; color: var(--ink); background: var(--bg); }
+    .top{ display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .logo{ height:82px; object-fit:contain; }
+    .title{ font-size:20px; font-weight:800; margin:0; letter-spacing:.2px; }
+    .meta{ color:var(--muted); font-size:12px; margin-top:6px; }
+    .card{ border:1px solid var(--line); border-radius:12px; padding:16px; margin-top:16px; }
+    .row{ display:flex; justify-content:space-between; gap:12px; padding:7px 0; font-size:13px; }
+    .row b{ font-size:13px; }
+    table{ width:100%; border-collapse:collapse; margin-top:8px; }
+    th, td{ text-align:left; padding:10px 8px; border-bottom:1px solid var(--line); font-size:13px; }
+    th{ background:#f6fbff; font-weight:800; }
+    .right{ text-align:right; }
+    .totals{ margin-top:10px; display:flex; justify-content:flex-end; }
+    .totals .box{ min-width:260px; }
+    .foot{ margin-top:16px; color:var(--muted); font-size:11px; }
+    .finebar{ display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:10px; }
+    .fineprint{ font-size:9.5px; line-height:1.25; color:var(--muted); flex:1; }
+    .qr{ width:98px; height:98px; object-fit:contain; border:1px solid var(--line); border-radius:10px; background:#fff; padding:6px; }
+    .subttl{ font-size:15px; font-weight:800; margin:0 0 10px 0; }
+    .bankbox{ border:1px dashed var(--line); border-radius:12px; padding:14px; }
+    .actions{ margin-top:14px; display:flex; gap:10px; }
+    .btn{ appearance:none; border:1px solid var(--line); background:#0b63ff; color:#fff; padding:10px 12px; border-radius:10px; font-weight:700; cursor:pointer; }
+    .btn.secondary{ background:#fff; color:var(--ink); }
+    @media print{
+      body{ margin:18mm; }
+      .actions{ display:none; }
+    }
+  </style>
+</head>
+<body>
+  <div id="printRoot">
+  <div class="finebar">
+    <div class="fineprint">
+      La presente cotización es válida por 15 días e incluye únicamente los conceptos señalados; cualquier servicio adicional será cotizado de manera independiente.
+      El pago deberá realizarse antes de efectuar el envío y, si aplica toma de muestra, antes de la toma.
+      En pacientes de aseguradora se debe presentar carta de autorización vigente con el monto autorizado; si existe una diferencia deberá cubrirse junto con coaseguro y/o deducible.
+      En caso de cancelación, el paciente deberá notificar con al menos 24 horas de anticipación.
+      La presente cotización está sujeta a cambios si existiera modificación en la prescripción por parte del médico.
+    </div>
+    <img class="qr" src="assets/img/qr-nomad.png" alt="QR" />
+  </div>
+  <div class="top">
+    <img class="logo" src="assets/img/logosNomad-11.png" alt="NOMAD" />
+    <div style="text-align:right">
+      <p class="title">Cotización NOMAD</p>
+      <div class="meta" id="metaDate">—</div>
+    </div>
+  </div>
+
+  <div class="card" id="patientCard"></div>
+
+  <div class="card">
+    <table>
+      <thead>
+        <tr><th>Estudio</th><th class="right">Precio</th></tr>
+      </thead>
+      <tbody id="itemsBody"></tbody>
+    </table>
+
+    <div class="totals">
+      <div class="box" id="totalsBox"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="subttl">Datos para depósito / transferencia</p>
+    <div class="bankbox">
+      <div class="row"><span>Beneficiario:</span><span><b>NOMAD INNOVATIONS, S.A. de C.V.</b></span></div>
+      <div class="row"><span>Cuenta:</span><span><b>0242675280201</b></span></div>
+      <div class="row"><span>CLABE interbancaria:</span><span><b>030420900017142148</b></span></div>
+      <div class="row"><span>Banco:</span><span><b>Banbajío</b></span></div>
+    </div>
+  </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn" id="btnPrint">Imprimir / Guardar PDF</button>
+    <button class="btn" id="btnDownload">Descargar PDF</button>
+    <button class="btn secondary" id="btnShare">Compartir</button>
+    <button class="btn secondary" id="btnClose">Cerrar</button>
+  </div>
+
+  <div class="foot">
+    Documento generado desde la interfaz NOMAD. Para validez fiscal/recibo oficial, se requiere integración con tu backend.
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script>
+    function money(n){
+      try{
+        return new Intl.NumberFormat("es-MX",{style:"currency",currency:"MXN"}).format(Number(n)||0);
+      }catch(e){
+        return "$" + (Number(n)||0).toFixed(2);
+      }
+    }
+
+    function safe(v){ return (v===undefined || v===null || v==="") ? "-" : String(v); }
+
+    
+    function slugName(s){
+      return String(s||"").trim()
+        .replace(/\s+/g,"_")
+        .replace(/[^\w\-]+/g,"")
+        .replace(/_+/g,"_")
+        .replace(/^_+|_+$/g,"");
+    }
+    function todayYMD(){
+      const d=new Date();
+      const y=d.getFullYear();
+      const m=String(d.getMonth()+1).padStart(2,"0");
+      const day=String(d.getDate()).padStart(2,"0");
+      return `${y}-${m}-${day}`;
+    }
+    function getFileName(payload){
+      const patient = slugName(payload?.patient?.nombre || payload?.patient?.name || payload?.patientName || "paciente");
+      return `nomad_${patient}_${todayYMD()}.pdf`;
+    }
+
+    async function buildPdfBlob(payload){
+      const root = document.getElementById("printRoot");
+      if(!root) throw new Error("No printRoot");
+
+      // Esperar a que carguen logos/QR antes de capturar
+      const imgs = Array.from(root.querySelectorAll("img"));
+      await Promise.all(imgs.map(img => {
+        if(img.complete) return Promise.resolve();
+        return new Promise(res => {
+          img.onload = () => res();
+          img.onerror = () => res();
+        });
+      }));
+
+      // render to canvas
+      const canvas = await window.html2canvas(root, { scale: 2, backgroundColor: "#ffffff", useCORS: true });
+      const imgData = canvas.toDataURL("image/png");
+
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({ orientation: "p", unit: "pt", format: "a4" });
+
+      const pageW = pdf.internal.pageSize.getWidth();
+      const pageH = pdf.internal.pageSize.getHeight();
+
+      const margin = 28;
+      const maxW = pageW - margin*2;
+      const maxH = pageH - margin*2;
+
+      const imgW = canvas.width;
+      const imgH = canvas.height;
+      const ratio = Math.min(maxW/imgW, maxH/imgH);
+      const w = imgW * ratio;
+      const h = imgH * ratio;
+
+      pdf.addImage(imgData, "PNG", margin, margin, w, h, undefined, "FAST");
+
+      const blob = pdf.output("blob");
+      const filename = getFileName(payload);
+      return { blob, filename };
+    }
+
+    async function downloadPdf(payload){
+      const { blob, filename } = await buildPdfBlob(payload);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url), 8000);
+      return { blob, filename };
+    }
+
+    async function sharePdf(payload){
+      const { blob, filename } = await buildPdfBlob(payload);
+      const file = new File([blob], filename, { type: "application/pdf" });
+
+      if(navigator.share && navigator.canShare && navigator.canShare({ files: [file] })){
+        await navigator.share({
+          title: "Cotización NOMAD",
+          text: "Te comparto la cotización en PDF.",
+          files: [file],
+        });
+        return true;
+      }
+
+      // Fallback: descarga + links
+      await downloadPdf(payload);
+
+      const msg = encodeURIComponent("Te comparto la cotización NOMAD. (Adjunto el PDF descargado)");
+      const wa = `https://wa.me/?text=${msg}`;
+      const mail = `mailto:?subject=${encodeURIComponent("Cotización NOMAD")}&body=${msg}`;
+
+      const hint = document.createElement("div");
+      hint.style.cssText = "margin-top:10px;color:#516273;font-size:12px";
+      hint.innerHTML = "Listo: se descargó el PDF. Ahora puedes adjuntarlo en WhatsApp/Correo. <a href='"+wa+"' target='_blank'>Abrir WhatsApp</a> · <a href='"+mail+"' target='_blank'>Abrir correo</a>";
+      document.querySelector(".actions")?.appendChild(hint);
+
+      return false;
+    }
+
+    function render(){
+      let payload = null;
+      try{ payload = JSON.parse(localStorage.getItem("nomad_print_payload_v1")||"null"); }catch(e){}
+      window.__payload = payload;
+      if(!payload || !payload.items || !payload.items.length){
+        document.getElementById("patientCard").innerHTML = "<b>No hay datos para imprimir.</b><div style='color:#516273;font-size:12px;margin-top:6px'>Regresa a Cotizar y vuelve a presionar “Generar PDF”.</div>";
+        document.getElementById("itemsBody").innerHTML = "";
+        document.getElementById("totalsBox").innerHTML = "";
+        return;
+      }
+
+      const dt = new Date(payload.timestamp || Date.now());
+      document.getElementById("metaDate").textContent = dt.toLocaleString("es-MX");
+
+      const p = payload.patient || {};
+      document.getElementById("patientCard").innerHTML = `
+        <div class="row"><span><b>Paciente</b></span><span>${safe(p.nombre)}</span></div>
+        <div class="row"><span><b>Expediente</b></span><span>${safe(p.expediente)}</span></div>
+        <div class="row"><span><b>Sede</b></span><span>${safe(p.sede)}</span></div>
+      `;
+
+      document.getElementById("itemsBody").innerHTML = payload.items.map(it => `
+        <tr>
+          <td>${safe(it.name)}</td>
+          <td class="right">${money(it.price)}</td>
+        </tr>
+      `).join("");
+
+      document.getElementById("totalsBox").innerHTML = `
+        <div class="row"><span>Subtotal</span><span><b>${money(payload.subtotal)}</b></span></div>
+        <div class="row"><span>Total</span><span><b>${money(payload.total)}</b></span></div>
+      `;
+    }
+
+    const btnPrint = document.getElementById("btnPrint");
+    const btnDownload = document.getElementById("btnDownload");
+    const btnShare = document.getElementById("btnShare");
+    const btnClose = document.getElementById("btnClose");
+
+    btnPrint?.addEventListener("click", () => window.print());
+    btnClose?.addEventListener("click", () => window.close());
+
+    btnDownload?.addEventListener("click", async () => {
+      try{
+        btnDownload.disabled = true;
+        btnDownload.textContent = "Generando...";
+        await downloadPdf(window.__payload);
+      }catch(e){
+        console.error(e);
+        alert("No se pudo generar/descargar el PDF.\n\nTip: abre la consola para ver el error.");
+      }finally{
+        btnDownload.disabled = false;
+        btnDownload.textContent = "Descargar PDF";
+      }
+    });
+
+    btnShare?.addEventListener("click", async () => {
+      try{
+        btnShare.disabled = true;
+        btnShare.textContent = "Preparando...";
+        await sharePdf(window.__payload);
+      }catch(e){
+        console.error(e);
+        alert("No se pudo compartir el PDF.");
+      }finally{
+        btnShare.disabled = false;
+        btnShare.textContent = "Compartir";
+      }
+    });
+
+    render();
+    try{
+      const qs = new URLSearchParams(location.search);
+      if(qs.get('mode')==='share') setTimeout(()=>document.getElementById('btnShare')?.click(), 350);
+      if(qs.get('mode')==='download') setTimeout(()=>document.getElementById('btnDownload')?.click(), 350);
+    }catch(e){}
+
+    // Abrir diálogo automáticamente (si el navegador lo permite)
+    window.addEventListener("load", () => setTimeout(() => { try{ window.print(); }catch(e){} }, 250));
+  </script>
+</body>
+</html>
