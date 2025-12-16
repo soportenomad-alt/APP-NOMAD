@@ -226,10 +226,11 @@
       document.getElementById("patientCard").innerHTML = `
         <div class="row"><span><b>Paciente</b></span><span>${safe(p.nombre)}</span></div>
         <div class="row"><span><b>Expediente</b></span><span>${safe(p.expediente)}</span></div>
-        <div class="row"><span><b>Sede</b></span><span>${safe(p.sede)}</span></div>
+        <div class="row"><span><b>Ciudades</b></span><span>${safe(p.ciudad || p.sede || "")}</span></div>
+        <div class="row"><span><b>KAM</b></span><span>${safe(p.kam || "")}</span></div>
       `;
 
-      document.getElementById("itemsBody").innerHTML = payload.items.map(it => `
+document.getElementById("itemsBody").innerHTML = payload.items.map(it => `
         <tr>
           <td>${safe(it.name)}</td>
           <td class="right">${money(it.price)}</td>
