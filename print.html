@@ -226,7 +226,6 @@
       document.getElementById("patientCard").innerHTML = `
         <div class="row"><span><b>Paciente</b></span><span>${safe(p.nombre)}</span></div>
         <div class="row"><span><b>Expediente</b></span><span>${safe(p.expediente)}</span></div>
-        <div class="row"><span><b>Sede</b></span><span>${safe(p.sede)}</span></div>
       `;
 
       document.getElementById("itemsBody").innerHTML = payload.items.map(it => `

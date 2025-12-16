@@ -548,7 +548,6 @@ function buildQuoteText(payload){
   lines.push(`Cotización NOMAD (${dateStr})`);
   if(patient?.nombre) lines.push(`Paciente: ${patient.nombre}`);
   if(patient?.expediente) lines.push(`Expediente: ${patient.expediente}`);
-  if(patient?.sede) lines.push(`Sede: ${patient.sede}`);
   lines.push("");
   lines.push("Estudios:");
   items.forEach((it, idx) => lines.push(`${idx+1}. ${it.name} — ${money(it.price)}`));
@@ -690,8 +689,8 @@ if(btnSave){
       return;
     }
     const p = payload.patient || {};
-    if(!(p.nombre||"").toString().trim() || !(p.expediente||"").toString().trim() || !(p.sede||"").toString().trim()){
-      showToast("Completa Nombre, Expediente y Sede");
+    if(!(p.nombre||"").toString().trim() || !(p.expediente||"").toString().trim() ){
+      showToast("Completa Nombre y Expediente");
       return;
     }
     state.checkout = payload;
@@ -709,8 +708,8 @@ if(btnBuy){
       return;
     }
     const p = payload.patient || {};
-    if(!(p.nombre||"").toString().trim() || !(p.expediente||"").toString().trim() || !(p.sede||"").toString().trim()){
-      showToast("Completa Nombre, Expediente y Sede");
+    if(!(p.nombre||"").toString().trim() || !(p.expediente||"").toString().trim() ){
+      showToast("Completa Nombre y Expediente");
       return;
     }
     state.checkout = payload;
@@ -741,7 +740,7 @@ function renderPayment(){
     <div class="row">
       <div>
         <h3>Resumen de compra</h3>
-        <small>${items.length} estudio(s) · ${patient.sede || "Sede no indicada"}</small>
+        <small>${items.length} estudio(s)</small>
       </div>
       <span class="badge blue"><i class="fa-solid fa-receipt" aria-hidden="true"></i> ${money(total)}</span>
     </div>
@@ -902,7 +901,6 @@ function renderPayPanel(tab){
     `NOMAD · Comprobante de pago\n` +
     `Paciente: ${patient.nombre || "-"}\n` +
     `Expediente: ${patient.expediente || "-"}\n` +
-    `Sede: ${patient.sede || "-"}\n` +
     `Total: ${money(total)}\n` +
     `Estudios: ${items.map(i => i.name).join(", ")}`
   );
@@ -1239,4 +1237,3 @@ if("serviceWorker" in navigator){
     window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(()=>{}));
   }
 }
-
