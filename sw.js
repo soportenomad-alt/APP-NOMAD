@@ -1,6 +1,6 @@
 /* Simple offline cache for static assets (GitHub Pages friendly). */
 // Bump de versión de cache para forzar actualización cuando se despliega un ZIP nuevo.
-const CACHE_NAME = "nomad-ui-v6-8";
+const CACHE_NAME = "nomad-ui-v6-7";
 const ASSETS = [
   "./",
   "./index.html",
@@ -19,8 +19,7 @@ const ASSETS = [
   "./assets/img/carousel/doctor-consult.jpg",
   "./assets/img/carousel/microscope.jpg",
   "./assets/img/carousel/researcher-microscope.jpg",
-  "./assets/data/catalogo_nomad_oficial.json",
-  "./assets/data/nuevos_apartados.json"
+  "./assets/data/catalogo_nomad_oficial.json"
 ];
 
 self.addEventListener("install", (event) => {

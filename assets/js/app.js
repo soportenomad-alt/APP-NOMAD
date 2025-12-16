@@ -105,72 +105,6 @@ async function tryFetchJson(url){
   return data;
 }
 
-
-async function hydrateAuxLists(){
-  // 1) cache localStorage
-  const cacheKey = "nomad_aux_v1";
-  try{
-    const cached = localStorage.getItem(cacheKey);
-    if(cached){
-      const data = JSON.parse(cached);
-      if(data && (Array.isArray(data.ciudades) || Array.isArray(data.kam))){
-        state.ciudades = Array.isArray(data.ciudades) ? data.ciudades : [];
-        state.kams = Array.isArray(data.kam) ? data.kam : [];
-        fillSelectOptions();
-      }
-    }
-  }catch(e){}
-
-  // 2) archivo local generado desde Excel
-  try{
-    const data = await tryFetchJson("./assets/data/nuevos_apartados.json");
-    state.ciudades = Array.isArray(data?.ciudades) ? data.ciudades : [];
-    state.kams = Array.isArray(data?.kam) ? data.kam : [];
-    try{ localStorage.setItem(cacheKey, JSON.stringify({ ciudades: state.ciudades, kam: state.kams })); }catch(e){}
-    fillSelectOptions();
-  }catch(e){
-    console.warn("[NOMAD] No se pudo cargar lista de Ciudades/KAM:", e);
-    fillSelectOptions();
-  }
-}
-
-function fillSelectOptions(){
-  const selCity = $("#pCity");
-  const selKam = $("#pKam");
-
-  if(selCity){
-    const current = selCity.value;
-    selCity.innerHTML = "";
-    const opt0 = document.createElement("option");
-    opt0.value = "";
-    opt0.textContent = "Selecciona";
-    selCity.appendChild(opt0);
-    (state.ciudades || []).forEach((c) => {
-      const opt = document.createElement("option");
-      opt.value = String(c);
-      opt.textContent = String(c);
-      selCity.appendChild(opt);
-    });
-    if(current) selCity.value = current;
-  }
-
-  if(selKam){
-    const current = selKam.value;
-    selKam.innerHTML = "";
-    const opt0 = document.createElement("option");
-    opt0.value = "";
-    opt0.textContent = "Selecciona";
-    selKam.appendChild(opt0);
-    (state.kams || []).forEach((k) => {
-      const opt = document.createElement("option");
-      opt.value = String(k);
-      opt.textContent = String(k);
-      selKam.appendChild(opt);
-    });
-    if(current) selKam.value = current;
-  }
-}
-
 function normalizeRemoteItems(raw){
   // Acepta: array directo; o {items:[...]} / {data:[...]} / {catalog:[...]}
   const arr = Array.isArray(raw) ? raw :
@@ -367,8 +301,6 @@ const state = {
   catalogSource: "demo",
   checkout: null,
   payTab: "card",
-  ciudades: [],
-  kams: [],
 };
 
 function money(n){
@@ -616,9 +548,7 @@ function buildQuoteText(payload){
   lines.push(`Cotización NOMAD (${dateStr})`);
   if(patient?.nombre) lines.push(`Paciente: ${patient.nombre}`);
   if(patient?.expediente) lines.push(`Expediente: ${patient.expediente}`);
-  const ciudad = patient?.ciudad || patient?.sede;
-  if(ciudad) lines.push(`Ciudades: ${ciudad}`);
-  if(patient?.kam) lines.push(`KAM: ${patient.kam}`);
+  if(patient?.sede) lines.push(`Sede: ${patient.sede}`);
   lines.push("");
   lines.push("Estudios:");
   items.forEach((it, idx) => lines.push(`${idx+1}. ${it.name} — ${money(it.price)}`));
@@ -709,9 +639,7 @@ function buildCheckoutPayload(){
     patient: {
       nombre: $("#pName")?.value || "",
       expediente: $("#pExp")?.value || "",
-      ciudad: $("#pCity")?.value || "",
-      kam: $("#pKam")?.value || "",
-      sede: $("#pCity")?.value || ""
+      sede: $("#pSite")?.value || ""
     },
     items: items.map(i => ({ id:i.id, name:i.name, price:i.price, tags:i.tags })),
     subtotal,
@@ -762,8 +690,8 @@ if(btnSave){
       return;
     }
     const p = payload.patient || {};
-    if(!(p.nombre||"").toString().trim() || !(p.expediente||"").toString().trim() || !(p.ciudad||p.sede||"").toString().trim() || !(p.kam||"").toString().trim()){
-      showToast("Completa Nombre, Expediente, Ciudades y KAM");
+    if(!(p.nombre||"").toString().trim() || !(p.expediente||"").toString().trim() || !(p.sede||"").toString().trim()){
+      showToast("Completa Nombre, Expediente y Sede");
       return;
     }
     state.checkout = payload;
@@ -781,8 +709,8 @@ if(btnBuy){
       return;
     }
     const p = payload.patient || {};
-    if(!(p.nombre||"").toString().trim() || !(p.expediente||"").toString().trim() || !(p.ciudad||p.sede||"").toString().trim() || !(p.kam||"").toString().trim()){
-      showToast("Completa Nombre, Expediente, Ciudades y KAM");
+    if(!(p.nombre||"").toString().trim() || !(p.expediente||"").toString().trim() || !(p.sede||"").toString().trim()){
+      showToast("Completa Nombre, Expediente y Sede");
       return;
     }
     state.checkout = payload;
@@ -813,7 +741,7 @@ function renderPayment(){
     <div class="row">
       <div>
         <h3>Resumen de compra</h3>
-        <small>${items.length} estudio(s) · ${(patient.ciudad || patient.sede) || "Ciudad no indicada"} · ${patient.kam || "KAM no indicado"}</small>
+        <small>${items.length} estudio(s) · ${patient.sede || "Sede no indicada"}</small>
       </div>
       <span class="badge blue"><i class="fa-solid fa-receipt" aria-hidden="true"></i> ${money(total)}</span>
     </div>
@@ -920,10 +848,8 @@ function renderPayHistory(rows){
     state.checkout = {
       patient: {
         nombre: found.patientNombre || found.patient?.nombre || "",
-        expediente: found.expediente || found.patient?.expediente || "",
-        ciudad: found.ciudad || found.patient?.ciudad || found.sede || found.patient?.sede || "",
-        kam: found.kam || found.patient?.kam || "",
-        sede: found.ciudad || found.patient?.ciudad || found.sede || found.patient?.sede || ""
+        expediente: found.expediente || "",
+        sede: found.sede || ""
       },
       items: Array.isArray(found.items) ? found.items : [],
       subtotal: typeof found.subtotal === "number" ? found.subtotal : (typeof found.total === "number" ? found.total : 0),
@@ -976,8 +902,7 @@ function renderPayPanel(tab){
     `NOMAD · Comprobante de pago\n` +
     `Paciente: ${patient.nombre || "-"}\n` +
     `Expediente: ${patient.expediente || "-"}\n` +
-    `Ciudades: ${(patient.ciudad || patient.sede) || "-"}\n` +
-    `KAM: ${patient.kam || "-"}\n` +
+    `Sede: ${patient.sede || "-"}\n` +
     `Total: ${money(total)}\n` +
     `Estudios: ${items.map(i => i.name).join(", ")}`
   );
@@ -1302,7 +1227,6 @@ function initHeroCarousel(){
 
 // initial
 hydrateCatalog();
-hydrateAuxLists();
 renderResults();
 setScreen("home");
 initHeroCarousel();

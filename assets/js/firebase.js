@@ -141,17 +141,11 @@
       const patient = payload?.patient || {};
       const items = Array.isArray(payload?.items) ? payload.items : [];
 
-      const ciudad = (patient.ciudad || patient.sede || payload?.ciudad || payload?.sede || "").toString().trim();
-      const kam = (patient.kam || payload?.kam || "").toString().trim();
-      try{ patient.ciudad = ciudad; patient.kam = kam; patient.sede = ciudad; }catch(e){}
-
       const data = {
         deviceId,
         folio: makeFolio(),
         expediente: (patient.expediente || "").toString().trim(),
-        sede: ciudad,
-        ciudad: ciudad,
-        kam: kam,
+        sede: (patient.sede || "").toString().trim(),
         patientNombre: (patient.nombre || "").toString().trim(),
 
         patient,
