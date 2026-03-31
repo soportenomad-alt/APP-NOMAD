@@ -41,6 +41,24 @@
     return id;
   }
 
+  function safeLocal(key){
+    try{ return (localStorage.getItem(key) || "").toString().trim(); }catch(e){ return ""; }
+  }
+
+  function safeUrlParam(name){
+    try{ return (new URLSearchParams(window.location.search).get(name) || "").toString().trim(); }catch(e){ return ""; }
+  }
+
+  function getProfileContext(){
+    const ownerUid = safeLocal("nomad_profile_uid") || safeUrlParam("uid");
+    const ownerEmail = (safeLocal("nomad_profile_email") || safeUrlParam("email")).toLowerCase();
+    const ownerUsername = safeLocal("nomad_profile_username") || safeUrlParam("username");
+    const ownerRole = safeLocal("nomad_profile_role") || safeUrlParam("role");
+    const ownerName = safeLocal("nomad_profile_name") || safeUrlParam("name");
+    const ownerKey = ownerUid || ownerEmail || getDeviceId();
+    return { ownerUid, ownerEmail, ownerUsername, ownerRole, ownerName, ownerKey };
+  }
+
   function makeFolio(){
     const d = new Date();
     const yy = String(d.getFullYear()).slice(-2);
@@ -54,6 +72,7 @@
   const NOMAD_FIRE = (window.NOMAD_FIRE = window.NOMAD_FIRE || {});
   NOMAD_FIRE.__loading = true;
   NOMAD_FIRE.getDeviceId = getDeviceId;
+  NOMAD_FIRE.getProfileContext = getProfileContext;
 
   let __authReadyResolve;
   const authReady = new Promise((res) => { __authReadyResolve = res; });
@@ -140,9 +159,16 @@
       const deviceId = getDeviceId();
       const patient = payload?.patient || {};
       const items = Array.isArray(payload?.items) ? payload.items : [];
+      const profile = getProfileContext();
 
       const data = {
         deviceId,
+        ownerKey: profile.ownerKey,
+        ownerUid: profile.ownerUid || "",
+        ownerEmail: profile.ownerEmail || "",
+        ownerUsername: profile.ownerUsername || "",
+        ownerRole: profile.ownerRole || "",
+        ownerName: profile.ownerName || "",
         folio: makeFolio(),
         expediente: (patient.expediente || "").toString().trim(),
         sede: (patient.sede || "").toString().trim(),
@@ -179,14 +205,26 @@
     function watchHistory({ expediente = "" } = {}, cb = () => {}){
       const deviceId = getDeviceId();
       const exp = (expediente || "").toString().trim();
+      const profile = getProfileContext();
 
-      // Query simple (sin índices compuestos)
-      const q = exp
-        ? query(collection(db, MAIN_COLLECTION), where("expediente", "==", exp), limit(20))
-        : query(collection(db, MAIN_COLLECTION), where("deviceId", "==", deviceId), limit(20));
+      let q;
+      if(profile.ownerUid){
+        q = query(collection(db, MAIN_COLLECTION), where("ownerUid", "==", profile.ownerUid), limit(50));
+      }else if(profile.ownerEmail){
+        q = query(collection(db, MAIN_COLLECTION), where("ownerEmail", "==", profile.ownerEmail), limit(50));
+      }else if(profile.ownerKey){
+        q = query(collection(db, MAIN_COLLECTION), where("ownerKey", "==", profile.ownerKey), limit(50));
+      }else if(exp){
+        q = query(collection(db, MAIN_COLLECTION), where("expediente", "==", exp), limit(20));
+      }else{
+        q = query(collection(db, MAIN_COLLECTION), where("deviceId", "==", deviceId), limit(20));
+      }
 
       return onSnapshot(q, (snap) => {
-        const rows = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        let rows = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        if(exp){
+          rows = rows.filter(r => ((r.expediente || "").toString().trim() === exp));
+        }
         cb(rows);
       }, (e) => {
         toast("Firebase: " + (e?.message || "No se pudo leer el historial"));
