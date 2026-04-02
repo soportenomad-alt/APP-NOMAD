@@ -410,8 +410,13 @@ select option{color:#0b1320}
 
 .navrow{
   display:grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 8px;
+}
+
+.bottomnav .navbtn[data-nav="quote"],
+.bottomnav .navbtn[data-nav="results"]{
+  display:none;
 }
 
 .navbtn{
