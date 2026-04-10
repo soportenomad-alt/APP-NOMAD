@@ -586,6 +586,7 @@ select option{color:#0b1320}
   font-size: 11px;
   line-height:1.45;
 }
+.footerhint:empty{display:none}
 
 /* prevent overscroll glow in some browsers */
 @media (prefers-reduced-motion: reduce){

@@ -211,9 +211,7 @@
               <div class="lbl">Plataforma</div>
             </div>
           </div>
-          <div class="footerhint">
-            Nota: esta es una demo visual. Si quieres, lo conectamos a tu Firebase y generamos PDF real.
-          </div>
+          <div class="footerhint"></div>
         </div>
       </section>
 
@@ -336,9 +334,7 @@
 
           <div id="payPanel"></div>
 
-          <div class="footerhint">
-            Nota: este flujo es demo visual. Si quieres cobro real con Stripe/Conekta y envío de comprobantes a tu WhatsApp/Correo, lo integramos.
-          </div>
+          <div class="footerhint"></div>
         </div>
       </section>
 
@@ -361,8 +357,8 @@
                 <img src="assets/img/logosNomad-14.png" alt="" />
               </div>
               <div>
-                <h3 style="margin:0">Usuario demo</h3>
-                <small>admin@nomadgenetics.com</small>
+                <h3 style="margin:0" id="profileUserName">Usuario</h3>
+                <small id="profileUserEmail"></small>
               </div>
             </div>
             <span class="badge blue"><i class="fa-solid fa-shield-halved"></i>&nbsp;MFA</span>
@@ -382,9 +378,11 @@
             <span class="badge warn">Revisión</span>
           </div>
 
-          <div class="footerhint">
-            ¿Quieres que esto sea login real con Firebase Auth y acceso restringido? También se puede.
+          <div class="actions" style="margin-top:12px; grid-template-columns:1fr">
+            <button class="btn ghost" id="btnLogout"><i class="fa-solid fa-right-from-bracket"></i>&nbsp;Cerrar sesión</button>
           </div>
+
+          <div class="footerhint"></div>
         </div>
 
         <div class="section">
@@ -394,10 +392,10 @@
           </div>
 
           <div class="grid2">
-            <button class="btn ghost" onclick="alert('Demo: abrir términos');">
+            <button class="btn ghost" onclick="alert('Abrir términos');">
               <i class="fa-solid fa-file-lines"></i>&nbsp;Términos
             </button>
-            <button class="btn ghost" onclick="alert('Demo: enviar feedback');">
+            <button class="btn ghost" onclick="alert('Enviar feedback');">
               <i class="fa-solid fa-comment-dots"></i>&nbsp;Feedback
             </button>
           </div>
@@ -441,7 +439,7 @@
       <div class="grab" aria-hidden="true"></div>
       <div class="row">
         <div>
-          <h3>Resumen (demo)</h3>
+          <h3>Resumen</h3>
           <p>Visual tipo app para validar look & feel. Se puede conectar a tu backend/PDF cuando lo pidas.</p>
         </div>
         <button class="iconbtn" id="sheetClose" aria-label="Cerrar">
