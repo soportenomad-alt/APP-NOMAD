@@ -279,7 +279,7 @@ async function hydrateCatalog(){
   }catch(e){
     console.warn("[NOMAD] No se pudo cargar catálogo oficial:", e);
     // Si ya había cache, no molestar. Si no, avisar que queda demo.
-    if(!cached) showToast("No se pudo cargar catálogo oficial; usando lista temporal");
+    if(!cached) showToast("No se pudo cargar catálogo oficial; usando lista demo");
   }
 }
 
@@ -372,11 +372,20 @@ function setScreen(next){
 
 navBtns.forEach(b => on(b, "click", () => setScreen(b.dataset.nav)));
 
+populateProfileUI();
+const __sessionProfile = getSessionProfile();
+if(!__sessionProfile.email && !__sessionProfile.uid){
+  renderLoggedOutState();
+}
+on(document.getElementById('btnLogout'), 'click', logoutUser);
+
 on($("#btnQuickCatalog"), "click", () => setScreen("catalog"));
 on($("#btnQuickQuote"), "click", () => setScreen("quote"));
 on($("#btnQuickResults"), "click", () => setScreen("results"));
 on($("#btnQuickSupport"), "click", () => {
-  showToast("Soporte: contacto@nomadgenetics.com");
+  try{ window.location.href = 'mailto:backoffice@nomadgenetics.com?subject=Soporte%20NOMAD'; }catch(e){}
+  setTimeout(() => { try{ window.location.href = 'tel:5579949420'; }catch(e){} }, 250);
+  showToast('Soporte: backoffice@nomadgenetics.com · 5579949420');
 });
 
 on($("#btnBell"), "click", () => showToast("Notificaciones: sin novedades"));
@@ -907,7 +916,7 @@ function renderPayPanel(tab){
 
   if(tab === "card"){
     panel.innerHTML = `
-      <div class="hint">Pago con tarjeta. Se puede integrar Stripe/Conekta para cobro real.</div>
+      <div class="hint">Pago con tarjeta.</div>
       <div class="form" style="margin-top:10px">
         <div class="field">
           <label>Nombre en la tarjeta</label>
@@ -930,7 +939,7 @@ function renderPayPanel(tab){
         <button class="btn" type="button" id="btnPayNow"><i class="fa-solid fa-lock"></i>&nbsp;Pagar ahora</button>
       </div>
     `;
-    $("#btnPayNow").onclick = () => showToast("Pendiente integrar pasarela (Stripe/Conekta)");
+    $("#btnPayNow").onclick = () => showToast("Demo: integrar pasarela (Stripe/Conekta)");
     return;
   }
 
@@ -983,7 +992,7 @@ function renderPayPanel(tab){
     </div>
   `;
   $("#btnSendProof2").onclick = () => window.open(`https://wa.me/${PAY_WHATSAPP}?text=${msg}`, "_blank");
-  $("#btnMarkPaid").onclick = () => showToast("Pendiente registrar pago en backend/Firebase");
+  $("#btnMarkPaid").onclick = () => showToast("Registrar pago en backend/Firebase");
 }
 
 
@@ -1222,84 +1231,6 @@ function initHeroCarousel(){
   update();
   start();
 }
-
-
-function getNomadProfileForUi(){
-  try{
-    const fire = window.NOMAD_FIRE;
-    if(fire && typeof fire.getProfileContext === "function") return fire.getProfileContext() || {};
-  }catch(e){}
-
-  const qp = new URLSearchParams(window.location.search);
-  const safeLocal = (key) => { try{ return (localStorage.getItem(key) || "").toString().trim(); }catch(e){ return ""; } };
-
-  return {
-    ownerName: safeLocal("nomad_profile_name") || qp.get("name") || "",
-    ownerUsername: safeLocal("nomad_profile_username") || qp.get("username") || "",
-    ownerEmail: safeLocal("nomad_profile_email") || qp.get("email") || ""
-  };
-}
-
-function renderProfileSession(){
-  const nameEl = $("#profileUserName");
-  const emailEl = $("#profileUserEmail");
-  if(!nameEl && !emailEl) return;
-
-  const profile = getNomadProfileForUi();
-  const displayName = profile.ownerName || profile.ownerUsername || (profile.ownerEmail ? profile.ownerEmail.split("@")[0] : "Usuario");
-  const displayEmail = profile.ownerEmail || "";
-
-  if(nameEl) nameEl.textContent = displayName;
-  if(emailEl) emailEl.textContent = displayEmail;
-}
-
-function clearProfileSession(){
-  const keys = [
-    "nomad_profile_uid",
-    "nomad_profile_email",
-    "nomad_profile_username",
-    "nomad_profile_role",
-    "nomad_profile_name",
-    "nomad_auth_token",
-    "nomad_session_token"
-  ];
-  keys.forEach((key) => {
-    try{ localStorage.removeItem(key); }catch(e){}
-    try{ sessionStorage.removeItem(key); }catch(e){}
-  });
-}
-
-async function handleLogout(){
-  clearProfileSession();
-
-  try{
-    if(window.Android && typeof window.Android.logout === "function") {
-      window.Android.logout();
-      return;
-    }
-  }catch(e){}
-
-  try{
-    if(window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.logout){
-      window.webkit.messageHandlers.logout.postMessage({ action: "logout" });
-      return;
-    }
-  }catch(e){}
-
-  try{
-    window.dispatchEvent(new CustomEvent("nomad:logout"));
-  }catch(e){}
-
-  renderProfileSession();
-  window.location.reload();
-}
-
-const btnLogout = $("#btnLogout");
-if(btnLogout){
-  btnLogout.addEventListener("click", handleLogout);
-}
-
-renderProfileSession();
 
 // initial
 hydrateCatalog();
