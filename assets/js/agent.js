@@ -12,6 +12,7 @@
     let unlocked = false; // Browser audio unlock flag
     let video = null; // Global reference within closure
     let hasPlayedVideo = false; // Flag to play video only once
+    let isVideoReady = false;
 
     function initAgent() {
         // Create container
@@ -51,7 +52,7 @@
                 </div>
             </div>
             <div class="agent-avatar-trigger" id="agentTrigger" title="Haz clic para hablar con Jane">
-                <video id="agentVideo" src="${VIDEO_URL}" playsinline poster="${FALLBACK_IMAGE}" style="display: block; width: 100%; height: 100%; object-fit: cover;"></video>
+                <video id="agentVideo" src="${VIDEO_URL}" playsinline muted loop poster="${FALLBACK_IMAGE}" style="display: block; width: 100%; height: 100%; object-fit: cover;"></video>
             </div>
         `;
 
@@ -65,10 +66,12 @@
         const btnQuote = document.getElementById('agentBtnQuote');
 
         // Start video in neutral loop
-        // Handle video initial state
-        if (VIDEO_URL) {
-            video.load();
-        } else {
+        if (VIDEO_URL && video) {
+            video.muted = true;
+            video.loop = true;
+            video.playsInline = true;
+            video.play().catch(e => console.warn("Autoplay blocked, waiting for interaction"));
+        } else if (video) {
             video.style.display = 'none';
         }
 
@@ -261,6 +264,7 @@
         } catch (error) {
             console.error("Jane Interaction Error:", error);
             textElement.innerHTML = `Lo siento, tuve un error técnico. <br><small style='opacity:0.5'>(${error.message})</small>`;
+            waveform.classList.remove('show');
         }
     }
 
@@ -271,33 +275,38 @@
         const trigger = document.getElementById('agentTrigger');
         const waveform = document.getElementById('agentWaveform');
 
-        if (video && video.src && !hasPlayedVideo) {
-            video.load();
-            video.currentTime = 0;
+        if (video && video.src) {
             video.muted = false;
+            video.currentTime = 0;
             
             video.onplay = () => {
                 isSpeaking = true;
                 trigger.classList.add('speaking');
                 waveform.classList.add('show');
-                console.log("Jane video playing with audio (First time)...");
-                hasPlayedVideo = true; // Mark as played
+                console.log("Jane is speaking (Video)...");
             };
 
             video.onended = () => {
                 isSpeaking = false;
                 trigger.classList.remove('speaking');
                 waveform.classList.remove('show');
+                video.muted = true; // Return to muted loop
+                video.play();
             };
 
             const playPromise = video.play();
             if (playPromise !== undefined) {
                 playPromise.catch(err => {
                     console.error("Video play error:", err);
-                    // If blocked, try muted as fallback
-                    video.muted = true;
-                    video.play();
-                    alert("Haz clic en la pantalla para activar el sonido de Jane.");
+                    // Fallback to text only if video fails
+                    isSpeaking = true;
+                    trigger.classList.add('speaking');
+                    waveform.classList.add('show');
+                    setTimeout(() => {
+                        isSpeaking = false;
+                        trigger.classList.remove('speaking');
+                        waveform.classList.remove('show');
+                    }, 4000);
                 });
             }
         } else {
@@ -317,7 +326,7 @@
     }
 
     function stopSpeaking() {
-        if (synth.speaking) {
+        if (synth && synth.speaking) {
             synth.cancel();
         }
         const trigger = document.getElementById('agentTrigger');
