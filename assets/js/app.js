@@ -527,21 +527,35 @@ on($("#btnAddToQuote"), "click", () => {
 });
 
 // Logic for RFC and Indication Upload
-on($("#btnUploadIndication"), "click", () => {
-  $("#fileIndication").click();
-});
+function initUploadHandlers() {
+  const btnUpload = $("#btnUploadIndication");
+  const fileInput = $("#fileIndication");
+  const status = $("#uploadStatus");
 
-on($("#fileIndication"), "change", (e) => {
-  const file = e.target.files[0];
-  if (file) {
-    const status = $("#uploadStatus");
-    if (status) {
-      status.style.display = "block";
-      status.innerHTML = `<i class="fa-solid fa-check-circle good"></i>&nbsp;${file.name}`;
-    }
-    showToast("Documento seleccionado: " + file.name);
+  if (btnUpload && fileInput) {
+    btnUpload.addEventListener("click", (e) => {
+      e.preventDefault();
+      // Pequeño timeout para asegurar que el hilo de ejecución sea limpio en móviles
+      setTimeout(() => {
+        fileInput.click();
+      }, 50);
+    });
+
+    fileInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        if (status) {
+          status.style.display = "block";
+          status.innerHTML = `<i class="fa-solid fa-check-circle good"></i>&nbsp;${file.name}`;
+        }
+        showToast("Documento seleccionado: " + file.name);
+      }
+    });
+  } else {
+    console.warn("[NOMAD] Upload elements not found for binding");
   }
-});
+}
+initUploadHandlers();
 
 
 function openSheet(summary){

@@ -203,8 +203,8 @@
         const waveform = document.getElementById('agentWaveform');
         const video = document.getElementById('agentVideo');
 
-        textElement.innerHTML = '<div class="typing-indicator"><span></span><span></span><span></span></div>';
-        waveform.classList.add('show'); // Show waveform while processing to indicate activity
+        textElement.innerHTML = '<div class="typing-indicator"><span></span><span></span><span></span></div><p style="font-size:11px; opacity:0.5; margin-top:5px;">Jane está pensando...</p>';
+        waveform.classList.add('show'); 
 
         try {
             const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
@@ -259,6 +259,7 @@
                 reply = reply.replace(/\[\[ADD_CART:.+?\]\]/g, "").trim();
             }
 
+            textElement.innerHTML = ""; // Limpiar antes de poner la respuesta
             textElement.textContent = reply;
             speak(reply);
         } catch (error) {
