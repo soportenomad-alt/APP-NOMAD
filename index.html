@@ -269,10 +269,10 @@
             <div class="field" style="margin-top:10px">
               <label>Indicación Médica</label>
               <div class="upload-container">
-                <input type="file" id="fileIndication" style="position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0;" accept="image/*,.pdf,.doc,.docx" />
-                <button class="btn small ghost" id="btnUploadIndication" style="width:100%">
+                <input type="file" id="fileIndication" style="display:none" accept="image/*,.pdf,.doc,.docx" />
+                <label for="fileIndication" class="btn small ghost" style="width:100%; display:inline-flex; align-items:center; justify-content:center; cursor:pointer;">
                   <i class="fa-solid fa-cloud-arrow-up"></i>&nbsp;Subir Documento o Foto
-                </button>
+                </label>
                 <div id="uploadStatus" class="hint" style="margin-top:5px; display:none">
                   <i class="fa-solid fa-check-circle good"></i>&nbsp;Archivo listo
                 </div>
@@ -490,8 +490,8 @@
     </div>
   </div>
 
-  <script defer src="assets/js/firebase.js?v=7.2"></script>
-  <script defer src="assets/js/app.js?v=7.2"></script>
-  <script defer src="assets/js/agent.js?v=7.2"></script>
+  <script defer src="assets/js/firebase.js?v=8.5"></script>
+  <script defer src="assets/js/app.js?v=8.5"></script>
+  <script defer src="assets/js/agent.js?v=8.5"></script>
 </body>
 </html>
