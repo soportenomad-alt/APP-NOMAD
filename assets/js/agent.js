@@ -276,7 +276,8 @@
         const trigger = document.getElementById('agentTrigger');
         const waveform = document.getElementById('agentWaveform');
 
-        if (video && video.src) {
+        if (video && video.src && !hasPlayedVideo) {
+            hasPlayedVideo = true;
             video.muted = false;
             video.currentTime = 0;
             
