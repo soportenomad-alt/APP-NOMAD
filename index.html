@@ -15,8 +15,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="assets/css/styles.css?v=16.0" />
-  <link rel="stylesheet" href="assets/css/agent.css?v=16.0" />
+<link rel="stylesheet" href="assets/css/styles.css?v=17.0" />
+  <link rel="stylesheet" href="assets/css/agent.css?v=17.0" />
 </head>
 <body>
   <div class="app" role="application" aria-label="NOMAD móvil">
@@ -268,14 +268,23 @@
 
             <div class="field" style="margin-top:10px">
               <label>Indicación Médica</label>
-              <div class="upload-container" style="width: 100%; border: 2px solid #25D366; border-radius: 20px; padding: 15px; background: rgba(37, 211, 102, 0.1);">
-                <a href="https://wa.me/5215580315367" target="_system" rel="external noopener noreferrer" class="btn" style="width: 100%; display:inline-flex; align-items:center; justify-content:center; text-decoration:none; background: #25D366; color: white; font-weight: 700; box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);">
-                  <i class="fa-brands fa-whatsapp"></i>&nbsp;ABRIR WHATSAPP
+              <div class="upload-container" style="width: 100%; border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding: 18px; background: rgba(0,0,0,0.25); text-align: center;">
+                <p style="font-size: 13px; margin-bottom: 12px; color: #00ceff; font-weight: 500;">
+                  <i class="fa-solid fa-circle-info"></i> Elige cómo enviar tus documentos:
+                </p>
+                
+                <a href="https://api.whatsapp.com/send?phone=5215580315367" target="_blank" class="btn" style="width: 100%; display:inline-flex; align-items:center; justify-content:center; text-decoration:none; background: #25D366; color: white; margin-bottom: 15px; font-weight: 600;">
+                  <i class="fa-brands fa-whatsapp"></i>&nbsp;Intentar abrir WhatsApp
                 </a>
-                <div style="margin-top:12px; text-align:center;">
-                  <span style="font-size: 11px; opacity: 0.8; display: block;">Si la app no abre, escríbenos al:</span>
-                  <b style="color: white; font-size: 16px; letter-spacing: 1px;">55 8031 5367</b>
-                  <p style="font-size: 10px; margin-top: 5px; color: #25D366;">Toma foto a tu documento y envíala.</p>
+
+                <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+                  <span style="font-size: 11px; opacity: 0.7; display: block; margin-bottom: 8px;">Si no abre, copia nuestro número oficial:</span>
+                  <div style="display: flex; align-items: center; justify-content: center; gap: 10px; background: rgba(37, 211, 102, 0.1); padding: 10px; border-radius: 12px; border: 1px solid rgba(37, 211, 102, 0.3);">
+                    <b style="color: #25D366; font-size: 16px; letter-spacing: 1px;">55 8031 5367</b>
+                    <button onclick="navigator.clipboard.writeText('5580315367'); alert('¡Número de NOMAD copiado! Pégalo en tu WhatsApp para enviarnos tus fotos.')" style="background: white; color: #25D366; border: none; padding: 6px 12px; border-radius: 8px; font-size: 11px; cursor: pointer; font-weight: 700;">
+                      COPIAR
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -491,8 +500,8 @@
     </div>
   </div>
 
-  <script defer src="assets/js/firebase.js?v=16.0"></script>
-  <script defer src="assets/js/app.js?v=16.0"></script>
-  <script defer src="assets/js/agent.js?v=16.0"></script>
+  <script defer src="assets/js/firebase.js?v=17.0"></script>
+  <script defer src="assets/js/app.js?v=17.0"></script>
+  <script defer src="assets/js/agent.js?v=17.0"></script>
 </body>
 </html>
