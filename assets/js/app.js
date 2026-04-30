@@ -528,19 +528,10 @@ on($("#btnAddToQuote"), "click", () => {
 
 // Logic for RFC and Indication Upload
 function initUploadHandlers() {
-  const btnUpload = $("#btnUploadIndication");
   const fileInput = $("#fileIndication");
   const status = $("#uploadStatus");
 
-  if (btnUpload && fileInput) {
-    btnUpload.addEventListener("click", (e) => {
-      e.preventDefault();
-      // Pequeño timeout para asegurar que el hilo de ejecución sea limpio en móviles
-      setTimeout(() => {
-        fileInput.click();
-      }, 50);
-    });
-
+  if (fileInput) {
     fileInput.addEventListener("change", (e) => {
       const file = e.target.files[0];
       if (file) {
@@ -551,8 +542,6 @@ function initUploadHandlers() {
         showToast("Documento seleccionado: " + file.name);
       }
     });
-  } else {
-    console.warn("[NOMAD] Upload elements not found for binding");
   }
 }
 initUploadHandlers();

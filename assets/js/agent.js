@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div class="agent-avatar-trigger" id="agentTrigger" title="Haz clic para hablar con Jane">
-                <video id="agentVideo" src="${VIDEO_URL}" playsinline muted loop poster="${FALLBACK_IMAGE}" style="display: block; width: 100%; height: 100%; object-fit: cover;"></video>
+                <video id="agentVideo" src="${VIDEO_URL}" playsinline muted poster="${FALLBACK_IMAGE}" style="display: block; width: 100%; height: 100%; object-fit: cover;"></video>
             </div>
         `;
 
@@ -68,9 +68,9 @@
         // Start video in neutral loop
         if (VIDEO_URL && video) {
             video.muted = true;
-            video.loop = true;
+            video.loop = false;
             video.playsInline = true;
-            video.play().catch(e => console.warn("Autoplay blocked, waiting for interaction"));
+            video.play().catch(e => console.warn("Autoplay blocked"));
         } else if (video) {
             video.style.display = 'none';
         }
@@ -291,8 +291,7 @@
                 isSpeaking = false;
                 trigger.classList.remove('speaking');
                 waveform.classList.remove('show');
-                video.muted = true; // Return to muted loop
-                video.play();
+                video.muted = true; 
             };
 
             const playPromise = video.play();
