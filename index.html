@@ -15,8 +15,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="assets/css/styles.css?v=10.0" />
-  <link rel="stylesheet" href="assets/css/agent.css?v=10.0" />
+<link rel="stylesheet" href="assets/css/styles.css?v=11.0" />
+  <link rel="stylesheet" href="assets/css/agent.css?v=11.0" />
 </head>
 <body>
   <div class="app" role="application" aria-label="NOMAD móvil">
@@ -268,13 +268,12 @@
 
             <div class="field" style="margin-top:10px">
               <label>Indicación Médica</label>
-              <div class="upload-container" style="position: relative; overflow: hidden; width: 100%;">
-                <input type="file" id="fileIndication" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 10;" accept="image/*,application/pdf" />
-                <button type="button" class="btn small ghost" style="width: 100%; pointer-events: none; position: relative; z-index: 1;">
-                  <i class="fa-solid fa-cloud-arrow-up"></i>&nbsp;Subir Documento o Foto
-                </button>
-                <div id="uploadStatus" class="hint" style="margin-top:5px; display:none; position:relative; z-index: 11;">
-                  <i class="fa-solid fa-check-circle good"></i>&nbsp;Archivo listo
+              <div class="upload-container" style="width: 100%;">
+                <a href="mailto:backoffice@nomadgenetics.com?subject=Documento%20Paciente" class="btn small ghost" style="width: 100%; display:inline-flex; align-items:center; justify-content:center; text-decoration:none; text-align:center;">
+                  <i class="fa-solid fa-envelope"></i>&nbsp;Enviar Documento por Correo
+                </a>
+                <div class="hint" style="margin-top:5px; text-align:center;">
+                  La app enviará sus archivos de forma segura.
                 </div>
               </div>
             </div>
@@ -490,8 +489,8 @@
     </div>
   </div>
 
-  <script defer src="assets/js/firebase.js?v=10.0"></script>
-  <script defer src="assets/js/app.js?v=10.0"></script>
-  <script defer src="assets/js/agent.js?v=10.0"></script>
+  <script defer src="assets/js/firebase.js?v=11.0"></script>
+  <script defer src="assets/js/app.js?v=11.0"></script>
+  <script defer src="assets/js/agent.js?v=11.0"></script>
 </body>
 </html>
