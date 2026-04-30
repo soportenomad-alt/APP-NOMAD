@@ -16,6 +16,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="stylesheet" href="assets/css/agent.css" />
 </head>
 <body>
   <div class="app" role="application" aria-label="NOMAD móvil">
@@ -258,7 +259,25 @@
               <div class="field" style="flex:1">
                 <label>Expediente</label>
                 <input class="input" id="pExp" placeholder="Ej. 072" />
-              </div></div>
+              </div>
+              <div class="field" style="flex:1">
+                <label>RFC (Opcional)</label>
+                <input class="input" id="pRFC" placeholder="RFC del paciente" />
+              </div>
+            </div>
+
+            <div class="field" style="margin-top:10px">
+              <label>Indicación Médica</label>
+              <div class="upload-container">
+                <input type="file" id="fileIndication" style="display:none" accept="image/*,.pdf,.doc,.docx" />
+                <button class="btn small ghost" id="btnUploadIndication" style="width:100%">
+                  <i class="fa-solid fa-cloud-arrow-up"></i>&nbsp;Subir Documento o Foto
+                </button>
+                <div id="uploadStatus" class="hint" style="margin-top:5px; display:none">
+                  <i class="fa-solid fa-check-circle good"></i>&nbsp;Archivo listo
+                </div>
+              </div>
+            </div>
                         <div class="hint">
               Los precios del catálogo ya incluyen IVA. Puedes agregar o eliminar estudios y revisar el total al instante.
               Cuando esté listo, presiona “Generar cotización” para ir a la pantalla de pago (tarjeta, transferencia o depósito).
@@ -473,5 +492,6 @@
 
   <script defer src="assets/js/firebase.js"></script>
   <script defer src="assets/js/app.js"></script>
+  <script defer src="assets/js/agent.js"></script>
 </body>
 </html>

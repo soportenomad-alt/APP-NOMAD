@@ -38,10 +38,13 @@ const sheet = $("#sheet");
 const on = (el, evt, fn) => { if(el) el.addEventListener(evt, fn); };
 const setText = (el, val) => { if(el) el.textContent = val; };
 
-const UI_VERSION = "v6.3";
-console.info("[NOMAD] UI", UI_VERSION);
-// Exponer versión para que Firebase la adjunte a cada registro (útil para debugging)
-try{ window.NOMAD_UI_VERSION = UI_VERSION; }catch(e){}
+// Exponer versión, estado y funciones de renderizado para que Jane pueda interactuar
+try{ 
+    window.NOMAD_UI_VERSION = UI_VERSION; 
+    window.NOMAD_STATE = state;
+    window.renderQuote = renderQuote;
+    window.renderCatalog = renderCatalog;
+}catch(e){}
 
 
 
@@ -523,6 +526,23 @@ on($("#btnAddToQuote"), "click", () => {
   showToast("Agregado a cotización");
 });
 
+// Logic for RFC and Indication Upload
+on($("#btnUploadIndication"), "click", () => {
+  $("#fileIndication").click();
+});
+
+on($("#fileIndication"), "change", (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const status = $("#uploadStatus");
+    if (status) {
+      status.style.display = "block";
+      status.innerHTML = `<i class="fa-solid fa-check-circle good"></i>&nbsp;${file.name}`;
+    }
+    showToast("Documento seleccionado: " + file.name);
+  }
+});
+
 
 function openSheet(summary){
   if(!sheet) return;
@@ -557,6 +577,8 @@ function buildQuoteText(payload){
   lines.push(`Cotización NOMAD (${dateStr})`);
   if(patient?.nombre) lines.push(`Paciente: ${patient.nombre}`);
   if(patient?.expediente) lines.push(`Expediente: ${patient.expediente}`);
+  if(patient?.rfc) lines.push(`RFC: ${patient.rfc}`);
+  if(patient?.indicacion) lines.push(`Archivo: ${patient.indicacion}`);
   lines.push("");
   lines.push("Estudios:");
   items.forEach((it, idx) => lines.push(`${idx+1}. ${it.name} — ${money(it.price)}`));
@@ -643,11 +665,16 @@ function buildCheckoutPayload(){
   const subtotal = items.reduce((a,b)=>a+b.price,0);
   const total = subtotal;
 
+  const fileInput = $("#fileIndication");
+  const fileName = fileInput && fileInput.files && fileInput.files[0] ? fileInput.files[0].name : "";
+
   return {
     patient: {
       nombre: $("#pName")?.value || "",
       expediente: $("#pExp")?.value || "",
-      sede: $("#pSite")?.value || ""
+      sede: $("#pSite")?.value || "",
+      rfc: $("#pRFC")?.value || "",
+      indicacion: fileName
     },
     items: items.map(i => ({ id:i.id, name:i.name, price:i.price, tags:i.tags })),
     subtotal,
@@ -1147,6 +1174,35 @@ function renderResults(q=""){
   $$("[data-rhist]").forEach(b => b.addEventListener("click", () => showToast("Historial: " + b.dataset.rhist)));
 }
 
+
+
+function getSessionProfile() {
+  if (window.NOMAD_FIRE && window.NOMAD_FIRE.getProfileContext) {
+    return window.NOMAD_FIRE.getProfileContext();
+  }
+  return {};
+}
+
+function populateProfileUI() {
+  const profile = getSessionProfile();
+  setText($("#profileName"), profile.ownerName || "Usuario");
+  setText($("#profileEmail"), profile.ownerEmail || "—");
+}
+
+function renderLoggedOutState() {
+  // console.warn("[NOMAD] Sesión no iniciada o usuario anónimo");
+}
+
+function logoutUser() {
+  try {
+    localStorage.removeItem("nomad_profile_uid");
+    localStorage.removeItem("nomad_profile_email");
+    localStorage.removeItem("nomad_profile_name");
+    localStorage.removeItem("nomad_profile_role");
+    localStorage.removeItem("nomad_profile_username");
+  } catch(e) {}
+  location.reload();
+}
 
 function initHeroCarousel(){
   const root = $("#heroCarousel");
