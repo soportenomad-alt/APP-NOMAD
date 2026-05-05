@@ -4,7 +4,7 @@
     const FALLBACK_IMAGE = "assets/img/agent_jane_v4.png";
     const VIDEO_URL = "assets/f_ba_mp_.mp4"; 
     const STORAGE_KEY = "nomad_agent_last_seen";
-    const GROQ_API_KEY = "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";
+    const GROQ_API_KEY = "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";
 
     let isSpeaking = false;
     let synth = window.speechSynthesis;
