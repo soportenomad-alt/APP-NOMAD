@@ -311,8 +311,16 @@ function money(n){
 }
 
 function showToast(msg){
+  const text = String(msg || "").trim();
+  const hiddenPopups = [
+    "Catálogo actualizado",
+    "No se pudo cargar catálogo",
+    "Firebase",
+    "Escáner:"
+  ];
+  if(hiddenPopups.some((item) => text.includes(item))) return;
   if(!toast) return;
-  toast.textContent = msg;
+  toast.textContent = text;
   toast.classList.add("show");
   clearTimeout(showToast._t);
   showToast._t = setTimeout(() => toast.classList.remove("show"), 2200);

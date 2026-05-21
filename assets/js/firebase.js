@@ -10,7 +10,8 @@
   function log(){ try{ console.log(TAG, ...arguments); }catch(e){} }
   function err(){ try{ console.error(TAG, ...arguments); }catch(e){} }
   function toast(msg){
-    try{ window.dispatchEvent(new CustomEvent("nomad:toast", { detail: String(msg||"") })); }catch(e){}
+    // Mensajes emergentes de Firebase desactivados; se conserva la lógica y la consola.
+    return;
   }
 
   const firebaseConfig = {
