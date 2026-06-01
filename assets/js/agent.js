@@ -4,7 +4,7 @@
     const FALLBACK_IMAGE = "assets/img/agent_jane_v4.png";
     const VIDEO_URL = "assets/f_ba_mp_.mp4"; 
     const STORAGE_KEY = "nomad_agent_last_seen";
-    const GROQ_API_KEY = "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";
+    const GROQ_PROXY_URL = "https://black-mountain-c0bf.pequitosalvaje.workers.dev";
 
     let isSpeaking = false;
     let synth = window.speechSynthesis;
@@ -207,10 +207,9 @@
         waveform.classList.add('show'); 
 
         try {
-            const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+            const response = await fetch(GROQ_PROXY_URL, {
                 method: "POST",
                 headers: {
-                    "Authorization": `Bearer ${GROQ_API_KEY}`,
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
