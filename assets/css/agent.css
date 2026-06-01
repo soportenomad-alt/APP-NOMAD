@@ -152,6 +152,22 @@
   line-height: 1.7;
   color: rgba(255, 255, 255, 0.85);
   position: relative;
+  max-height: 40vh; /* Permite scroll si el texto es muy largo */
+  overflow-y: auto;
+  padding-right: 8px; /* Espacio para el scrollbar */
+}
+
+/* Estilo elegante para el scrollbar */
+.agent-content::-webkit-scrollbar {
+  width: 4px;
+}
+.agent-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+.agent-content::-webkit-scrollbar-thumb {
+  background: var(--agent-secondary);
+  border-radius: 4px;
 }
 
 .agent-content p {
