@@ -1,6 +1,6 @@
 /* Simple offline cache for static assets (GitHub Pages friendly). */
 // Bump de versión de cache para forzar actualización cuando se despliega un ZIP nuevo.
-const CACHE_NAME = "nomad-ui-v18-sin-popups";
+const CACHE_NAME = "nomad-ui-v19-proxy-groq";
 const ASSETS = [
   "./",
   "./index.html",
