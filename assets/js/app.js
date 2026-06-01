@@ -38,13 +38,7 @@ const sheet = $("#sheet");
 const on = (el, evt, fn) => { if(el) el.addEventListener(evt, fn); };
 const setText = (el, val) => { if(el) el.textContent = val; };
 
-// Exponer versión, estado y funciones de renderizado para que Jane pueda interactuar
-try{ 
-    window.NOMAD_UI_VERSION = UI_VERSION; 
-    window.NOMAD_STATE = state;
-    window.renderQuote = renderQuote;
-    window.renderCatalog = renderCatalog;
-}catch(e){}
+// Exposiciones de variables globales movidas al final del archivo
 
 
 
@@ -1313,3 +1307,11 @@ if("serviceWorker" in navigator){
     window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(()=>{}));
   }
 }
+
+// Exponer estado y funciones de renderizado para que Jane pueda interactuar (al final para asegurar que existan)
+try{ 
+    window.NOMAD_UI_VERSION = "v19"; 
+    window.NOMAD_STATE = state;
+    window.renderQuote = renderQuote;
+    window.renderCatalog = renderCatalog;
+}catch(e){}
